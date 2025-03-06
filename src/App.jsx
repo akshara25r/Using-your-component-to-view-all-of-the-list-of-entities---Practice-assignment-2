@@ -1,8 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from 'react';
 import './App.css'
-
+import PostCard from './components/postcard';
 function App() {
 
   const initialPosts = [
@@ -28,11 +28,23 @@ function App() {
       isLiked: false,
     },
   ];
+  const [posts, setPosts] = useState(initialPosts);
+
+  // Update the liked status for a specific post
+  const handleLikeToggle = (postId, newStatus) => {
+    const updatedPosts = posts.map((post) =>
+      post.id === postId ? { ...post, isLiked: newStatus } : post
+    );
+    setPosts(updatedPosts);
+  };
 
   return (
-    <>
-      
-    </>
+    <div className="App" style={{ padding: '2rem' }}>
+      <h1>User Posts</h1>
+      {posts.map((post) => (
+        <PostCard key={post.id} post={post} onLikeToggle={handleLikeToggle} />
+      ))}
+    </div>
   )
 }
 
